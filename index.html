@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop.az - Premium Store</title>
+    <title>Shop.az - Server Order</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -203,7 +203,7 @@
         const NO_IMG = "https://placehold.co/300x300/f5f5f7/a1a1a6?text=No+Image";
 
         let allProducts = [];
-        let cart = [];
+        let cart = []; // LOCAL STORAGE İŞLƏTMİRİK, YALNIZ RAM-DA
         let token = localStorage.getItem('token');
         let userName = localStorage.getItem('name');
 
@@ -236,6 +236,7 @@
             } else {
                 document.getElementById('authBtn').style.display='block';
                 document.getElementById('logoutBtn').style.display='none';
+                document.getElementById('greeting').innerText = "";
             }
         }
 
@@ -267,13 +268,10 @@
                 let raw = p.coverPhoto || p.imagePath || p.imageUrl;
                 let img = NO_IMG;
 
-                // --- ZİBİL MƏLUMAT FİLTERİ (SHEKIL/STRING FIX) ---
                 if (raw && typeof raw === 'string' && raw.trim() !== "") {
-                    // Mənasız sözləri bloklayırıq
                     if (raw === "shekil" || raw === "string" || raw === "image") {
                         img = NO_IMG;
                     } 
-                    // Normal linkləri proxy edirik
                     else if (raw.startsWith("http")) {
                         if (raw.includes("195.26.245.5")) {
                             img = IMG_PROXY + raw.split("9505/")[1];
@@ -281,12 +279,10 @@
                             img = raw.replace("http://", "https://");
                         }
                     } 
-                    // Fayl yollarını proxy edirik
                     else {
                         img = IMG_PROXY + raw;
                     }
                 }
-                // ------------------------------------------------
 
                 grid.innerHTML += `
                     <div class="card" onclick="addToCart('${id}', '${name}', ${price}, '${img}')">
@@ -315,10 +311,13 @@
             if(event) event.stopPropagation();
             const existing = cart.find(i => i.id === id);
             if(existing) existing.count++; else cart.push({ id, name, price, img, count: 1 });
-            updateBadge();
+            
+            // LOCAL STORAGE SİLİNDİ - YALNIZ RAM
+            
             const badge = document.getElementById('cartBadge');
             badge.style.transform = "scale(1.5)";
             setTimeout(() => badge.style.transform = "scale(1)", 200);
+            updateBadge();
         }
 
         function renderCart() {
@@ -356,16 +355,54 @@
             renderCart();
             updateBadge();
         }
+        
         function updateBadge() {
             const c = cart.reduce((a,b)=>a+b.count,0);
             const b = document.getElementById('cartBadge');
             b.innerText = c;
             if(c>0) b.classList.add('active'); else b.classList.remove('active');
         }
-        function checkout() {
+
+        // --- SİFARİŞİ SERVERƏ GÖNDƏRMƏK (VACİB HİSSƏ) ---
+        async function checkout() {
             if(cart.length===0) return alert("Səbət boşdur");
-            alert("Sifariş qəbul olundu!");
-            cart=[]; updateBadge(); toggleCart();
+            if(!token) return alert("Sifariş üçün giriş etməlisiniz!");
+
+            // 1. Səbəti Serverin istədiyi formata salırıq
+            // Serverin gözlədiyi formatı bilmirik, amma standart olaraq belə ola bilər:
+            // "orderDetails": [ { "productId": 1, "count": 2 } ]
+            
+            const orderPayload = {
+                orderDetails: cart.map(item => ({
+                    productId: parseInt(item.id) || 0, // ID rəqəm olmalıdır
+                    count: item.count
+                }))
+            };
+
+            try {
+                const res = await fetch(API_URL + "/orders", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Token mütləq olmalıdır
+                    },
+                    body: JSON.stringify(orderPayload)
+                });
+
+                if(res.ok) {
+                    alert("Sifarişiniz serverə uğurla göndərildi!");
+                    cart = []; // Səbəti boşalt
+                    updateBadge();
+                    toggleCart();
+                } else {
+                    const txt = await res.text();
+                    console.error("Order Error:", txt);
+                    alert("Sifariş xətası. Server qəbul etmədi.");
+                }
+            } catch(e) {
+                console.error(e);
+                alert("Server xətası.");
+            }
         }
 
         function openAuth(m) { 
@@ -400,9 +437,9 @@
                 const data = await res.json();
                 const tk = data.body?.token || data.token;
                 if(tk) {
-                    localStorage.setItem('token', tk);
+                    localStorage.setItem('token', tk); // Token-i hələ də saxlamalıyıq ki, sifariş verə bilək
                     if(!localStorage.getItem('name')) localStorage.setItem('name', user);
-                    location.reload();
+                    location.reload(); 
                 } else alert("Məlumatlar səhvdir.");
             } catch(e) { alert("Server xətası."); }
         }
@@ -434,7 +471,10 @@
         }
 
         function logout() {
-            if(confirm("Çıxış?")) { localStorage.clear(); location.reload(); }
+            if(confirm("Çıxış?")) { 
+                localStorage.removeItem('token');
+                location.reload(); 
+            }
         }
     </script>
 </body>
