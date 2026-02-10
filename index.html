@@ -200,7 +200,6 @@
     <script>
         const API_URL = "/api";
         const IMG_PROXY = "/img-proxy/";
-        // Placeholder şəkil (HTTPS)
         const NO_IMG = "https://placehold.co/300x300/f5f5f7/a1a1a6?text=No+Image";
 
         let allProducts = [];
@@ -268,23 +267,26 @@
                 let raw = p.coverPhoto || p.imagePath || p.imageUrl;
                 let img = NO_IMG;
 
-                // --- ŞƏKİL URL DÜZƏLİŞİ (XƏTA HƏLLİ) ---
-                // Əgər server "string" sözü qaytarıbsa və ya boşdursa, placeholder işlət
-                if (raw && raw !== "string" && raw.trim() !== "") {
-                    if (raw.startsWith("http")) {
-                        // Əgər serverin öz IP-sidirsə, proxy istifadə et
+                // --- ZİBİL MƏLUMAT FİLTERİ (SHEKIL/STRING FIX) ---
+                if (raw && typeof raw === 'string' && raw.trim() !== "") {
+                    // Mənasız sözləri bloklayırıq
+                    if (raw === "shekil" || raw === "string" || raw === "image") {
+                        img = NO_IMG;
+                    } 
+                    // Normal linkləri proxy edirik
+                    else if (raw.startsWith("http")) {
                         if (raw.includes("195.26.245.5")) {
                             img = IMG_PROXY + raw.split("9505/")[1];
                         } else {
-                            // Kənar linkdirsə, https-ə çevir
                             img = raw.replace("http://", "https://");
                         }
-                    } else {
-                        // Relativ yoldursa, proxy əlavə et
+                    } 
+                    // Fayl yollarını proxy edirik
+                    else {
                         img = IMG_PROXY + raw;
                     }
                 }
-                // ------------------------------------------
+                // ------------------------------------------------
 
                 grid.innerHTML += `
                     <div class="card" onclick="addToCart('${id}', '${name}', ${price}, '${img}')">
