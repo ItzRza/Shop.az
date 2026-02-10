@@ -19,7 +19,6 @@
             --modal-bg: #ffffff;
             --input-bg: #f2f2f7;
             --border-color: rgba(0,0,0,0.1);
-            --shadow-color: rgba(0,0,0,0.1);
             --hero-gradient: radial-gradient(circle at center, rgba(0,113,227,0.1) 0%, transparent 70%);
         }
 
@@ -33,133 +32,105 @@
             --modal-bg: #1c1c1e;
             --input-bg: #2c2c2e;
             --border-color: rgba(255,255,255,0.15);
-            --shadow-color: rgba(0,0,0,0.5);
             --hero-gradient: radial-gradient(circle at center, rgba(0,113,227,0.2) 0%, transparent 80%);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        body { 
-            background-color: var(--bg-main); 
-            color: var(--text-main); 
-            overflow-x: hidden; 
-            transition: background-color 0.4s ease, color 0.4s ease;
-        }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; transition: 0.3s; }
         html { scroll-behavior: smooth; }
 
+        /* NAV */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
-            background: var(--nav-bg);
-            backdrop-filter: saturate(180%) blur(20px);
+            background: var(--nav-bg); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
             padding: 0 5%; height: 60px;
             display: flex; justify-content: space-between; align-items: center;
-            transition: all 0.3s ease;
         }
 
-        .logo { font-size: 1.6rem; font-weight: 800; text-decoration: none; color: var(--text-main); letter-spacing: -1px; }
+        .logo { font-size: 1.6rem; font-weight: 800; text-decoration: none; color: var(--text-main); }
         .logo span { color: var(--primary); }
 
-        .search-wrapper {
-            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
-            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); overflow: hidden; border-radius: 20px;
-        }
-        .search-wrapper.active { width: 300px; background: var(--input-bg); padding-left: 15px; }
-        .search-input { width: 100%; height: 100%; border: none; background: transparent; outline: none; font-size: 0.95rem; opacity: 0; transition: 0.3s; color: var(--text-main); }
-        .search-wrapper.active .search-input { opacity: 1; }
-        .search-icon { font-size: 1.1rem; color: var(--text-main); cursor: pointer; position: absolute; right: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
-
         .nav-right { display: flex; align-items: center; gap: 20px; }
-        .icon-btn { cursor: pointer; position: relative; font-size: 1.2rem; color: var(--text-main); transition: transform 0.2s; }
-        .icon-btn:hover { transform: scale(1.15); color: var(--primary); }
+        .icon-btn { cursor: pointer; font-size: 1.2rem; color: var(--text-main); transition: 0.2s; }
+        .icon-btn:hover { color: var(--primary); transform: scale(1.1); }
+        
         .badge {
             position: absolute; top: -5px; right: -8px; background: var(--primary); color: white;
             font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 700;
-            transform: scale(0); transition: transform 0.3s;
+            transform: scale(0); transition: 0.3s;
         }
         .badge.active { transform: scale(1); }
 
-        .hero {
-            height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding-top: 80px; background: var(--hero-gradient);
-        }
-        .hero h1 { font-size: 4.5rem; font-weight: 800; letter-spacing: -2px; opacity: 0; animation: fadeUp 1s forwards 0.2s; color: var(--text-main); }
-        .hero p { font-size: 1.5rem; color: var(--text-muted); margin: 20px 0 40px 0; max-width: 600px; opacity: 0; animation: fadeUp 1s forwards 0.4s; }
+        /* HERO */
+        .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--hero-gradient); }
+        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 10px; opacity: 0; animation: fadeUp 1s forwards 0.2s; }
+        .hero p { font-size: 1.5rem; color: var(--text-muted); opacity: 0; animation: fadeUp 1s forwards 0.4s; }
+        
         .cta-btn {
-            padding: 15px 40px; background: var(--primary); color: white; border-radius: 30px;
-            font-size: 1.1rem; font-weight: 600; border: none; cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); opacity: 0; animation: fadeUp 1s forwards 0.6s;
-            transition: transform 0.3s;
+            margin-top: 30px; padding: 15px 40px; background: var(--primary); color: white; 
+            border-radius: 30px; border: none; cursor: pointer; font-size: 1.1rem;
+            opacity: 0; animation: fadeUp 1s forwards 0.6s; transition: 0.3s;
         }
         .cta-btn:hover { transform: scale(1.05); }
 
+        /* MARKET */
         .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 35px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
 
         .card {
-            background: var(--card-bg); backdrop-filter: blur(20px);
-            border: 1px solid var(--border-color); border-radius: 24px; padding: 30px;
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 20px;
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            transition: all 0.5s; cursor: pointer; position: relative;
+            transition: 0.3s; cursor: pointer; position: relative;
         }
-        .card:hover { transform: translateY(-12px); box-shadow: 0 25px 50px var(--shadow-color); }
-        .card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 20px; transition: transform 0.5s; }
-        .card:hover img { transform: scale(1.08); }
-        .card-tag { position: absolute; top: 20px; left: 20px; font-size: 0.7rem; font-weight: 700; color: var(--primary); text-transform: uppercase; }
-        .card-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 5px; color: var(--text-main); }
-        .card-price { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 20px; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        .card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 15px; }
+        .card-title { font-weight: 600; margin-bottom: 5px; color: var(--text-main); }
+        .card-price { color: var(--text-muted); }
+        
         .add-btn {
-            width: 45px; height: 45px; border-radius: 50%; background: var(--input-bg); color: var(--primary); border: none;
-            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
-            position: absolute; bottom: 25px; right: 25px;
+            position: absolute; bottom: 20px; right: 20px; width: 40px; height: 40px;
+            border-radius: 50%; background: var(--input-bg); color: var(--primary);
+            border: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
         }
-        .card:hover .add-btn { background: var(--primary); color: white; transform: rotate(90deg); }
+        .card:hover .add-btn { background: var(--primary); color: white; }
 
+        /* SIDEBAR & MODAL */
         .sidebar {
             position: fixed; top: 0; right: 0; width: 400px; height: 100%;
-            background: var(--sidebar-bg); backdrop-filter: blur(30px);
-            box-shadow: -20px 0 50px var(--shadow-color); z-index: 2000; padding: 30px; display: flex; flex-direction: column;
-            transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            border-left: 1px solid var(--border-color);
+            background: var(--sidebar-bg); backdrop-filter: blur(20px);
+            z-index: 2000; padding: 30px; display: flex; flex-direction: column;
+            transform: translateX(100%); transition: 0.5s; box-shadow: -10px 0 30px rgba(0,0,0,0.1);
         }
         .sidebar.open { transform: translateX(0); }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1500; opacity: 0; pointer-events: none; transition: 0.5s; }
-        .overlay.active { opacity: 1; pointer-events: all; }
-        .cart-item { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid var(--border-color); }
-        .cart-item img { width: 60px; height: 60px; object-fit: contain; background: var(--bg-main); border-radius: 12px; padding: 5px; }
-
-        .auth-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(10px); z-index: 3000; justify-content: center; align-items: center; }
-        .auth-box { 
-            background: var(--modal-bg); width: 400px; padding: 40px; border-radius: 30px; 
-            box-shadow: 0 30px 60px var(--shadow-color); text-align: center; border: 1px solid var(--border-color);
-            animation: popIn 0.4s;
+        
+        .overlay, .auth-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4); z-index: 1500; display: none;
         }
-        .auth-input { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 15px; outline: none; background: var(--input-bg); font-size: 1rem; transition: 0.3s; color: var(--text-main); }
-        .auth-input:focus { border-color: var(--primary); }
-        .auth-btn { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 15px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.3s; }
-        .auth-btn:hover { transform: scale(1.02); }
+        .overlay.active, .auth-overlay.active { display: flex; align-items: center; justify-content: center; }
 
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes popIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .auth-box {
+            background: var(--modal-bg); width: 400px; padding: 40px; border-radius: 24px;
+            text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .auth-input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); }
+        .auth-btn { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; }
+
+        .cart-item { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        .cart-item img { width: 50px; height: 50px; object-fit: contain; }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
     <nav>
         <a href="#" class="logo">Shop<span>.az</span></a>
-        
-        <div class="search-wrapper" id="searchWrapper">
-            <input type="text" class="search-input" id="searchInput" placeholder="Məhsul axtar...">
-            <div class="search-icon" onclick="toggleSearch()">
-                <i class="fas fa-search"></i>
-            </div>
-        </div>
-
         <div class="nav-right">
-            <div class="icon-btn" onclick="toggleTheme()">
-                <i class="fas fa-moon" id="themeIcon"></i>
-            </div>
+            <div class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></div>
             <span id="greeting" style="font-size:0.9rem; font-weight:600; color:var(--primary)"></span>
             <div class="icon-btn" id="authBtn" onclick="openAuth('login')"><i class="far fa-user"></i></div>
             <div class="icon-btn" id="logoutBtn" onclick="logout()" style="display:none; color:#ff3b30"><i class="fas fa-sign-out-alt"></i></div>
@@ -173,116 +144,90 @@
     <section class="hero">
         <h1>Premium Alış-veriş.</h1>
         <p>Texnologiya və stilin mükəmməl harmoniyası.</p>
-        <button class="cta-btn" onclick="document.getElementById('market').scrollIntoView()">Kəşf Et</button>
+        <button class="cta-btn" onclick="document.getElementById('market').scrollIntoView()">Alış-verişə Başla</button>
     </section>
 
     <div class="container" id="market">
-        <h2 style="font-size:2.5rem; font-weight:700; margin-bottom:40px; color:var(--text-main)">Vitrindilər.</h2>
-        <div id="loading" style="text-align:center; color:var(--text-muted); padding:50px">Yüklənir...</div>
+        <h2 style="font-size:2rem; margin-bottom:30px;">Vitrindilər.</h2>
+        <div id="loading" style="text-align:center; padding:50px">Yüklənir...</div>
         <div class="grid" id="productGrid"></div>
     </div>
 
     <div class="overlay" id="overlay" onclick="toggleCart()"></div>
     <div class="sidebar" id="cartSidebar">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px">
-            <h2 style="font-size:1.8rem; font-weight:700; color:var(--text-main)">Səbət</h2>
-            <div onclick="toggleCart()" style="cursor:pointer; font-size:1.5rem; color:var(--text-muted); background:var(--input-bg); width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center">&times;</div>
+        <h2 style="margin-bottom:20px">Səbət</h2>
+        <div style="flex-grow:1; overflow-y:auto" id="cartItems"></div>
+        <div style="margin-top:20px; font-weight:bold; font-size:1.2rem; display:flex; justify-content:space-between">
+            <span>Cəmi:</span> <span id="totalPrice">0 ₼</span>
         </div>
-        <div style="flex-grow:1; overflow-y:auto" id="cartItems">
-            <p style="text-align:center; color:var(--text-muted); margin-top:50px">Hələ ki boşdur.</p>
-        </div>
-        <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border-color)">
-            <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.4rem; margin-bottom:20px; color:var(--text-main)">
-                <span>Cəmi:</span> <span id="totalPrice">0 ₼</span>
-            </div>
-            <button class="auth-btn" onclick="checkout()">Sifarişi Tamamla</button>
-        </div>
+        <button class="auth-btn" style="margin-top:20px" onclick="checkout()">Sifarişi Tamamla</button>
     </div>
 
-    <div class="auth-overlay" id="authOverlay">
+    <div class="auth-overlay" id="authOverlay" onclick="if(event.target===this) closeAuth()">
         <div class="auth-box">
-            <div style="text-align:right; margin-bottom:10px">
-                <span onclick="closeAuth()" style="cursor:pointer; font-size:1.5rem; color:var(--text-muted)">&times;</span>
-            </div>
-            <h2 id="modalTitle" style="margin-bottom:20px; font-weight:700; color:var(--text-main)">Giriş</h2>
+            <h2 id="modalTitle" style="margin-bottom:20px">Giriş</h2>
             
             <div id="loginForm">
                 <input type="text" id="logUser" class="auth-input" placeholder="İstifadəçi adı">
                 <input type="password" id="logPass" class="auth-input" placeholder="Şifrə">
                 <button class="auth-btn" onclick="login()">Daxil ol</button>
-                <p style="margin-top:20px; color:var(--primary); cursor:pointer; font-weight:500" onclick="switchMode('register')">Hesab yarat</p>
+                <p style="margin-top:15px; color:var(--primary); cursor:pointer" onclick="switchMode('register')">Hesab yarat</p>
             </div>
 
             <div id="regForm" style="display:none">
-                <input type="text" id="regName" class="auth-input" placeholder="Adınız">
-                <input type="text" id="regSurname" class="auth-input" placeholder="Soyadınız">
-                <input type="text" id="regUser" class="auth-input" placeholder="Username (İstifadəçi adı)">
+                <input type="text" id="regName" class="auth-input" placeholder="Ad">
+                <input type="text" id="regSurname" class="auth-input" placeholder="Soyad">
+                <input type="text" id="regUser" class="auth-input" placeholder="İstifadəçi adı">
                 <input type="email" id="regEmail" class="auth-input" placeholder="Email">
                 <input type="password" id="regPass" class="auth-input" placeholder="Şifrə">
                 <button class="auth-btn" onclick="register()">Qeydiyyat</button>
-                <p style="margin-top:20px; color:var(--primary); cursor:pointer; font-weight:500" onclick="switchMode('login')">Girişə qayıt</p>
+                <p style="margin-top:15px; color:var(--primary); cursor:pointer" onclick="switchMode('login')">Girişə qayıt</p>
             </div>
         </div>
     </div>
 
     <script>
-        // API ÜNVANI (NETLIFY PROXY İLƏ)
-        const API_URL = "/api"; 
+        // --- VACİB: URL-lər DIRNAQ İÇİNDƏ ---
+        const API_URL = "/api";
         const IMG_PROXY = "/img-proxy/";
-        
-        const NO_IMG = "data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3e%3crect fill='%23f5f5f7' width='300' height='300'/%3e%3ctext fill='%23d2d2d7' font-family='sans-serif' font-size='20' font-weight='600' x='50%25' y='50%25' text-anchor='middle'%3eShop.az%3c/text%3e%3c/svg%3e";
+        // Xəta çıxmasın deyə sadə bir HTTPS şəkli
+        const NO_IMG = "https://placehold.co/300x300/f5f5f7/a1a1a6?text=No+Image";
 
         let allProducts = [];
         let cart = [];
         let token = localStorage.getItem('token');
         let userName = localStorage.getItem('name');
 
+        // --- THEME ---
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            updateThemeIcon(isDark);
+            document.getElementById('themeIcon').className = isDark ? "fas fa-sun" : "fas fa-moon";
         }
-
-        function updateThemeIcon(isDark) {
-            const icon = document.getElementById('themeIcon');
-            icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
-        }
-
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
+        if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
-            updateThemeIcon(true);
+            document.getElementById('themeIcon').className = "fas fa-sun";
         }
 
+        // --- INIT ---
         window.onload = () => {
             checkAuth();
             loadProducts();
-            document.getElementById('searchInput').addEventListener('input', (e) => {
-                const term = e.target.value.toLowerCase();
-                const filtered = allProducts.filter(p => (p.name || p.Name || "").toLowerCase().includes(term));
-                renderGrid(filtered);
-            });
         };
 
         function checkAuth() {
             if(token && userName) {
-                document.getElementById('authBtn').style.display = 'none';
-                document.getElementById('logoutBtn').style.display = 'block';
-                document.getElementById('greeting').innerText = `Salam, ${userName}`;
+                document.getElementById('authBtn').style.display='none';
+                document.getElementById('logoutBtn').style.display='block';
+                document.getElementById('greeting').innerText = "Salam, " + userName;
             } else {
-                document.getElementById('authBtn').style.display = 'block';
-                document.getElementById('logoutBtn').style.display = 'none';
+                document.getElementById('authBtn').style.display='block';
+                document.getElementById('logoutBtn').style.display='none';
             }
         }
 
-        function toggleSearch() {
-            const wrapper = document.getElementById('searchWrapper');
-            const input = document.getElementById('searchInput');
-            wrapper.classList.toggle('active');
-            if(wrapper.classList.contains('active')) input.focus();
-        }
-
+        // --- MƏHSULLARI YÜKLƏ (MIXED CONTENT FIX) ---
         async function loadProducts() {
             try {
                 const res = await fetch(API_URL + "/products");
@@ -296,33 +241,34 @@
         function renderGrid(products) {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = "";
+            
             products.forEach(p => {
                 const name = p.name || p.Name || "Məhsul";
                 const price = p.price || p.Price || 0;
                 const id = p.id || p.Id;
+                let rawImg = p.coverPhoto || p.imagePath || p.imageUrl;
                 let img = NO_IMG;
-                const raw = p.coverPhoto || p.imagePath || p.imageUrl;
-                
-                // MÜHÜM: Şəkilləri də Proxy vasitəsilə yükləyirik (Mixed Content Xətası Bitir!)
-                if(raw) {
-                    if(raw.startsWith('http')) {
-                        // Əgər tam linkdirsə (http...), onu proxy-ə çevirməliyik
-                        // Amma serverin IP-sidirsə, onu kəsib proxy əlavə edirik
-                        if(raw.includes("195.26.245.5")) {
-                           const path = raw.split("9505/")[1]; // Linkin sonunu götür
-                           img = IMG_PROXY + path;
+
+                // Şəkil linkini düzəltmək (Proxy vasitəsilə)
+                if(rawImg) {
+                    // Əgər http linkdirsə və ya IP ünvanı varsa
+                    if(rawImg.includes("http") || rawImg.includes("195.26.245.5")) {
+                        // Linkin sonunu götürürük
+                        const parts = rawImg.split("9505/"); 
+                        if(parts.length > 1) {
+                            img = IMG_PROXY + parts[1];
                         } else {
-                            img = raw; // Başqa saytın şəklidirsə qalsın
+                            // Başqa saytdırsa, http-ni https etməyə çalışaq
+                            img = rawImg.replace("http://", "https://");
                         }
                     } else {
-                        // Sadəcə yol (məs: uploads/1.jpg)
-                        img = IMG_PROXY + raw;
+                        // Sadəcə fayl yoludur
+                        img = IMG_PROXY + rawImg;
                     }
                 }
 
                 grid.innerHTML += `
                     <div class="card" onclick="addToCart('${id}', '${name}', ${price}, '${img}')">
-                        <div class="card-tag">Yeni</div>
                         <img src="${img}" onerror="this.src='${NO_IMG}'">
                         <div class="card-title">${name}</div>
                         <div class="card-price">${price} ₼</div>
@@ -331,11 +277,18 @@
             });
         }
 
-        /* CART */
+        // --- SƏBƏT ---
         function toggleCart() {
-            document.getElementById('cartSidebar').classList.toggle('open');
-            document.getElementById('overlay').classList.toggle('active');
-            renderCart();
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('overlay');
+            if(sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+                overlay.style.display='none';
+            } else {
+                sidebar.classList.add('open');
+                overlay.style.display='block';
+                renderCart();
+            }
         }
 
         function addToCart(id, name, price, img) {
@@ -343,6 +296,8 @@
             const existing = cart.find(i => i.id === id);
             if(existing) existing.count++; else cart.push({ id, name, price, img, count: 1 });
             updateBadge();
+            
+            // Animasiya
             const badge = document.getElementById('cartBadge');
             badge.style.transform = "scale(1.5)";
             setTimeout(() => badge.style.transform = "scale(1)", 200);
@@ -353,7 +308,7 @@
             container.innerHTML = "";
             let total = 0;
             if(cart.length === 0) {
-                container.innerHTML = "<p style='text-align:center; color:var(--text-muted); margin-top:50px'>Səbətiniz boşdur.</p>";
+                container.innerHTML = "<p style='text-align:center; color:gray; margin-top:20px'>Boşdur</p>";
                 document.getElementById('totalPrice').innerText = "0 ₼";
                 return;
             }
@@ -363,15 +318,15 @@
                     <div class="cart-item">
                         <img src="${item.img}" onerror="this.src='${NO_IMG}'">
                         <div style="flex-grow:1">
-                            <div style="font-weight:600; color:var(--text-main)">${item.name}</div>
-                            <div style="color:var(--text-muted)">${item.price} ₼</div>
+                            <div>${item.name}</div>
+                            <div style="color:gray; font-size:0.9rem">${item.price} ₼</div>
                         </div>
-                        <div style="display:flex; align-items:center; gap:12px; background:var(--input-bg); padding:5px 10px; border-radius:12px">
-                            <span style="cursor:pointer; font-weight:700; color:var(--primary)" onclick="updateItem(${index}, -1)">-</span>
-                            <span style="font-weight:600; color:var(--text-main)">${item.count}</span>
-                            <span style="cursor:pointer; font-weight:700; color:var(--primary)" onclick="updateItem(${index}, 1)">+</span>
+                        <div style="display:flex; gap:10px; align-items:center">
+                            <i class="fas fa-minus" style="cursor:pointer" onclick="updateItem(${index}, -1)"></i>
+                            <span>${item.count}</span>
+                            <i class="fas fa-plus" style="cursor:pointer" onclick="updateItem(${index}, 1)"></i>
                         </div>
-                        <i class="fas fa-trash" style="margin-left:10px; color:#ff3b30; cursor:pointer" onclick="updateItem(${index}, -999)"></i>
+                        <i class="fas fa-trash" style="color:#ff3b30; cursor:pointer; margin-left:10px" onclick="updateItem(${index}, -999)"></i>
                     </div>`;
             });
             document.getElementById('totalPrice').innerText = total.toFixed(2) + " ₼";
@@ -391,13 +346,20 @@
         }
         function checkout() {
             if(cart.length===0) return alert("Səbət boşdur");
-            alert("Sifariş qəbul olundu. Təşəkkürlər!");
+            alert("Sifariş qəbul olundu!");
             cart=[]; updateBadge(); toggleCart();
         }
 
-        /* AUTH */
-        function openAuth(m) { document.getElementById('authOverlay').style.display='flex'; switchMode(m); }
-        function closeAuth() { document.getElementById('authOverlay').style.display='none'; }
+        // --- AUTH ---
+        function openAuth(m) { 
+            const el = document.getElementById('authOverlay');
+            el.style.display='flex'; 
+            el.classList.add('active');
+            switchMode(m); 
+        }
+        function closeAuth() { 
+            document.getElementById('authOverlay').style.display='none'; 
+        }
         function switchMode(m) {
             if(m==='register') {
                 document.getElementById('loginForm').style.display='none';
@@ -424,7 +386,7 @@
                     localStorage.setItem('token', tk);
                     if(!localStorage.getItem('name')) localStorage.setItem('name', user);
                     location.reload();
-                } else alert("Giriş uğursuz: Məlumatlar səhvdir.");
+                } else alert("Məlumatlar səhvdir.");
             } catch(e) { alert("Server xətası."); }
         }
 
@@ -447,21 +409,15 @@
                     method: 'POST', headers: {'Content-Type':'application/json'},
                     body: JSON.stringify(payload)
                 });
-                
                 if(res.ok) {
                     localStorage.setItem('name', name);
-                    // Qeydiyyat uğurludur, birbaşa giriş edirik
                     login(user, pass);
-                } else {
-                    // Server xəta verir (ad tutulub və s.)
-                    const txt = await res.text();
-                    alert("Qeydiyyat xətası: İstifadəçi adı artıq mövcud ola bilər.");
-                }
+                } else alert("İstifadəçi adı artıq mövcuddur.");
             } catch(e) { alert("Server xətası."); }
         }
 
         function logout() {
-            if(confirm("Hesabdan çıxırsınız?")) { localStorage.clear(); location.reload(); }
+            if(confirm("Çıxış?")) { localStorage.clear(); location.reload(); }
         }
     </script>
 </body>
