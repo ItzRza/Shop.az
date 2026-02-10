@@ -40,7 +40,6 @@
         body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; transition: 0.3s; }
         html { scroll-behavior: smooth; }
 
-        /* NAV */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: var(--nav-bg); backdrop-filter: blur(20px);
@@ -51,6 +50,16 @@
 
         .logo { font-size: 1.6rem; font-weight: 800; text-decoration: none; color: var(--text-main); }
         .logo span { color: var(--primary); }
+
+        .search-wrapper {
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1); overflow: hidden; border-radius: 20px;
+        }
+        .search-wrapper.active { width: 300px; background: var(--input-bg); padding-left: 15px; }
+        .search-input { width: 100%; height: 100%; border: none; background: transparent; outline: none; font-size: 0.95rem; opacity: 0; transition: 0.3s; color: var(--text-main); }
+        .search-wrapper.active .search-input { opacity: 1; }
+        .search-icon { font-size: 1.1rem; color: var(--text-main); cursor: pointer; position: absolute; right: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
 
         .nav-right { display: flex; align-items: center; gap: 20px; }
         .icon-btn { cursor: pointer; font-size: 1.2rem; color: var(--text-main); transition: 0.2s; }
@@ -63,11 +72,9 @@
         }
         .badge.active { transform: scale(1); }
 
-        /* HERO */
         .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--hero-gradient); }
         .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 10px; opacity: 0; animation: fadeUp 1s forwards 0.2s; }
         .hero p { font-size: 1.5rem; color: var(--text-muted); opacity: 0; animation: fadeUp 1s forwards 0.4s; }
-        
         .cta-btn {
             margin-top: 30px; padding: 15px 40px; background: var(--primary); color: white; 
             border-radius: 30px; border: none; cursor: pointer; font-size: 1.1rem;
@@ -75,7 +82,6 @@
         }
         .cta-btn:hover { transform: scale(1.05); }
 
-        /* MARKET */
         .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
 
@@ -85,11 +91,9 @@
             transition: 0.3s; cursor: pointer; position: relative;
         }
         .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        
         .card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 15px; }
         .card-title { font-weight: 600; margin-bottom: 5px; color: var(--text-main); }
         .card-price { color: var(--text-muted); }
-        
         .add-btn {
             position: absolute; bottom: 20px; right: 20px; width: 40px; height: 40px;
             border-radius: 50%; background: var(--input-bg); color: var(--primary);
@@ -97,7 +101,6 @@
         }
         .card:hover .add-btn { background: var(--primary); color: white; }
 
-        /* SIDEBAR & MODAL */
         .sidebar {
             position: fixed; top: 0; right: 0; width: 400px; height: 100%;
             background: var(--sidebar-bg); backdrop-filter: blur(20px);
@@ -129,6 +132,14 @@
 
     <nav>
         <a href="#" class="logo">Shop<span>.az</span></a>
+        
+        <div class="search-wrapper" id="searchWrapper">
+            <input type="text" class="search-input" id="searchInput" placeholder="Məhsul axtar...">
+            <div class="search-icon" onclick="toggleSearch()">
+                <i class="fas fa-search"></i>
+            </div>
+        </div>
+
         <div class="nav-right">
             <div class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></div>
             <span id="greeting" style="font-size:0.9rem; font-weight:600; color:var(--primary)"></span>
@@ -148,16 +159,16 @@
     </section>
 
     <div class="container" id="market">
-        <h2 style="font-size:2rem; margin-bottom:30px;">Vitrindilər.</h2>
-        <div id="loading" style="text-align:center; padding:50px">Yüklənir...</div>
+        <h2 style="font-size:2rem; margin-bottom:30px; color:var(--text-main)">Vitrindilər.</h2>
+        <div id="loading" style="text-align:center; padding:50px; color:var(--text-muted)">Yüklənir...</div>
         <div class="grid" id="productGrid"></div>
     </div>
 
     <div class="overlay" id="overlay" onclick="toggleCart()"></div>
     <div class="sidebar" id="cartSidebar">
-        <h2 style="margin-bottom:20px">Səbət</h2>
+        <h2 style="margin-bottom:20px; color:var(--text-main)">Səbət</h2>
         <div style="flex-grow:1; overflow-y:auto" id="cartItems"></div>
-        <div style="margin-top:20px; font-weight:bold; font-size:1.2rem; display:flex; justify-content:space-between">
+        <div style="margin-top:20px; font-weight:bold; font-size:1.2rem; display:flex; justify-content:space-between; color:var(--text-main)">
             <span>Cəmi:</span> <span id="totalPrice">0 ₼</span>
         </div>
         <button class="auth-btn" style="margin-top:20px" onclick="checkout()">Sifarişi Tamamla</button>
@@ -165,7 +176,7 @@
 
     <div class="auth-overlay" id="authOverlay" onclick="if(event.target===this) closeAuth()">
         <div class="auth-box">
-            <h2 id="modalTitle" style="margin-bottom:20px">Giriş</h2>
+            <h2 id="modalTitle" style="margin-bottom:20px; color:var(--text-main)">Giriş</h2>
             
             <div id="loginForm">
                 <input type="text" id="logUser" class="auth-input" placeholder="İstifadəçi adı">
@@ -187,10 +198,9 @@
     </div>
 
     <script>
-        // --- VACİB: URL-lər DIRNAQ İÇİNDƏ ---
         const API_URL = "/api";
         const IMG_PROXY = "/img-proxy/";
-        // Xəta çıxmasın deyə sadə bir HTTPS şəkli
+        // Placeholder şəkil (HTTPS)
         const NO_IMG = "https://placehold.co/300x300/f5f5f7/a1a1a6?text=No+Image";
 
         let allProducts = [];
@@ -198,7 +208,6 @@
         let token = localStorage.getItem('token');
         let userName = localStorage.getItem('name');
 
-        // --- THEME ---
         function toggleTheme() {
             document.body.classList.toggle('dark-mode');
             const isDark = document.body.classList.contains('dark-mode');
@@ -210,10 +219,14 @@
             document.getElementById('themeIcon').className = "fas fa-sun";
         }
 
-        // --- INIT ---
         window.onload = () => {
             checkAuth();
             loadProducts();
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                const term = e.target.value.toLowerCase();
+                const filtered = allProducts.filter(p => (p.name || p.Name || "").toLowerCase().includes(term));
+                renderGrid(filtered);
+            });
         };
 
         function checkAuth() {
@@ -227,7 +240,13 @@
             }
         }
 
-        // --- MƏHSULLARI YÜKLƏ (MIXED CONTENT FIX) ---
+        function toggleSearch() {
+            const wrapper = document.getElementById('searchWrapper');
+            const input = document.getElementById('searchInput');
+            wrapper.classList.toggle('active');
+            if(wrapper.classList.contains('active')) input.focus();
+        }
+
         async function loadProducts() {
             try {
                 const res = await fetch(API_URL + "/products");
@@ -246,26 +265,26 @@
                 const name = p.name || p.Name || "Məhsul";
                 const price = p.price || p.Price || 0;
                 const id = p.id || p.Id;
-                let rawImg = p.coverPhoto || p.imagePath || p.imageUrl;
+                let raw = p.coverPhoto || p.imagePath || p.imageUrl;
                 let img = NO_IMG;
 
-                // Şəkil linkini düzəltmək (Proxy vasitəsilə)
-                if(rawImg) {
-                    // Əgər http linkdirsə və ya IP ünvanı varsa
-                    if(rawImg.includes("http") || rawImg.includes("195.26.245.5")) {
-                        // Linkin sonunu götürürük
-                        const parts = rawImg.split("9505/"); 
-                        if(parts.length > 1) {
-                            img = IMG_PROXY + parts[1];
+                // --- ŞƏKİL URL DÜZƏLİŞİ (XƏTA HƏLLİ) ---
+                // Əgər server "string" sözü qaytarıbsa və ya boşdursa, placeholder işlət
+                if (raw && raw !== "string" && raw.trim() !== "") {
+                    if (raw.startsWith("http")) {
+                        // Əgər serverin öz IP-sidirsə, proxy istifadə et
+                        if (raw.includes("195.26.245.5")) {
+                            img = IMG_PROXY + raw.split("9505/")[1];
                         } else {
-                            // Başqa saytdırsa, http-ni https etməyə çalışaq
-                            img = rawImg.replace("http://", "https://");
+                            // Kənar linkdirsə, https-ə çevir
+                            img = raw.replace("http://", "https://");
                         }
                     } else {
-                        // Sadəcə fayl yoludur
-                        img = IMG_PROXY + rawImg;
+                        // Relativ yoldursa, proxy əlavə et
+                        img = IMG_PROXY + raw;
                     }
                 }
+                // ------------------------------------------
 
                 grid.innerHTML += `
                     <div class="card" onclick="addToCart('${id}', '${name}', ${price}, '${img}')">
@@ -277,7 +296,6 @@
             });
         }
 
-        // --- SƏBƏT ---
         function toggleCart() {
             const sidebar = document.getElementById('cartSidebar');
             const overlay = document.getElementById('overlay');
@@ -296,8 +314,6 @@
             const existing = cart.find(i => i.id === id);
             if(existing) existing.count++; else cart.push({ id, name, price, img, count: 1 });
             updateBadge();
-            
-            // Animasiya
             const badge = document.getElementById('cartBadge');
             badge.style.transform = "scale(1.5)";
             setTimeout(() => badge.style.transform = "scale(1)", 200);
@@ -308,7 +324,7 @@
             container.innerHTML = "";
             let total = 0;
             if(cart.length === 0) {
-                container.innerHTML = "<p style='text-align:center; color:gray; margin-top:20px'>Boşdur</p>";
+                container.innerHTML = "<p style='text-align:center; color:var(--text-muted); margin-top:20px'>Boşdur</p>";
                 document.getElementById('totalPrice').innerText = "0 ₼";
                 return;
             }
@@ -317,11 +333,11 @@
                 container.innerHTML += `
                     <div class="cart-item">
                         <img src="${item.img}" onerror="this.src='${NO_IMG}'">
-                        <div style="flex-grow:1">
+                        <div style="flex-grow:1; color:var(--text-main)">
                             <div>${item.name}</div>
-                            <div style="color:gray; font-size:0.9rem">${item.price} ₼</div>
+                            <div style="color:var(--text-muted); font-size:0.9rem">${item.price} ₼</div>
                         </div>
-                        <div style="display:flex; gap:10px; align-items:center">
+                        <div style="display:flex; gap:10px; align-items:center; color:var(--text-main)">
                             <i class="fas fa-minus" style="cursor:pointer" onclick="updateItem(${index}, -1)"></i>
                             <span>${item.count}</span>
                             <i class="fas fa-plus" style="cursor:pointer" onclick="updateItem(${index}, 1)"></i>
@@ -350,7 +366,6 @@
             cart=[]; updateBadge(); toggleCart();
         }
 
-        // --- AUTH ---
         function openAuth(m) { 
             const el = document.getElementById('authOverlay');
             el.style.display='flex'; 
@@ -412,7 +427,7 @@
                 if(res.ok) {
                     localStorage.setItem('name', name);
                     login(user, pass);
-                } else alert("İstifadəçi adı artıq mövcuddur.");
+                } else alert("Qeydiyyat xətası: İstifadəçi adı tutulub.");
             } catch(e) { alert("Server xətası."); }
         }
 
