@@ -1,9 +1,18 @@
+# 1. API sorğuları üçün Proxy
 [[redirects]]
   from = "/api/*"
   to = "http://195.26.245.5:9505/api/:splat"
   status = 200
   force = true
 
+# 2. ŞƏKİLLƏR üçün Proxy (Bu hissə yeni əlavə olundu)
+[[redirects]]
+  from = "/img-proxy/*"
+  to = "http://195.26.245.5:9505/:splat"
+  status = 200
+  force = true
+
+# 3. Saytın özü üçün yönləndirmə
 [[redirects]]
   from = "/*"
   to = "/index.html"
