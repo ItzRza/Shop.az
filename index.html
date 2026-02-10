@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop.az - Server Order</title>
+    <title>Shop.az - Premium Store</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -40,6 +40,7 @@
         body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; transition: 0.3s; }
         html { scroll-behavior: smooth; }
 
+        /* NAVBAR */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: var(--nav-bg); backdrop-filter: blur(20px);
@@ -61,17 +62,32 @@
         .search-wrapper.active .search-input { opacity: 1; }
         .search-icon { font-size: 1.1rem; color: var(--text-main); cursor: pointer; position: absolute; right: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
 
+        /* BADGE FIX - Düzəliş Buradadır */
         .nav-right { display: flex; align-items: center; gap: 20px; }
-        .icon-btn { cursor: pointer; font-size: 1.2rem; color: var(--text-main); transition: 0.2s; }
+        .icon-btn { cursor: pointer; font-size: 1.3rem; color: var(--text-main); transition: 0.2s; position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
         .icon-btn:hover { color: var(--primary); transform: scale(1.1); }
         
         .badge {
-            position: absolute; top: -5px; right: -8px; background: var(--primary); color: white;
-            font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 700;
-            transform: scale(0); transition: 0.3s;
+            position: absolute; 
+            top: 2px; 
+            right: 0px; 
+            background: var(--primary); 
+            color: white;
+            font-size: 0.7rem; 
+            min-width: 18px; 
+            height: 18px; 
+            border-radius: 50%; 
+            font-weight: 700;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            transform: scale(0); 
+            transition: 0.3s;
+            border: 2px solid var(--nav-bg); /* Kənarları ağardır ki, oxunaqlı olsun */
         }
         .badge.active { transform: scale(1); }
 
+        /* HERO */
         .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--hero-gradient); }
         .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 10px; opacity: 0; animation: fadeUp 1s forwards 0.2s; }
         .hero p { font-size: 1.5rem; color: var(--text-muted); opacity: 0; animation: fadeUp 1s forwards 0.4s; }
@@ -82,6 +98,7 @@
         }
         .cta-btn:hover { transform: scale(1.05); }
 
+        /* MARKET */
         .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
 
@@ -101,6 +118,7 @@
         }
         .card:hover .add-btn { background: var(--primary); color: white; }
 
+        /* SIDEBAR */
         .sidebar {
             position: fixed; top: 0; right: 0; width: 400px; height: 100%;
             background: var(--sidebar-bg); backdrop-filter: blur(20px);
@@ -109,21 +127,32 @@
         }
         .sidebar.open { transform: translateX(0); }
         
-        .overlay, .auth-overlay {
+        .overlay, .auth-overlay, .checkout-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.4); z-index: 1500; display: none;
         }
-        .overlay.active, .auth-overlay.active { display: flex; align-items: center; justify-content: center; }
+        .overlay.active, .auth-overlay.active, .checkout-overlay.active { display: flex; align-items: center; justify-content: center; }
 
-        .auth-box {
-            background: var(--modal-bg); width: 400px; padding: 40px; border-radius: 24px;
+        /* MODAL BOXES */
+        .auth-box, .checkout-box {
+            background: var(--modal-bg); width: 450px; padding: 30px; border-radius: 24px;
             text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            max-height: 90vh; overflow-y: auto;
         }
-        .auth-input { width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-main); }
-        .auth-btn { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; }
+        .auth-input, .checkout-input { 
+            width: 100%; padding: 12px; margin-bottom: 10px; 
+            border-radius: 12px; border: 1px solid var(--border-color); 
+            background: var(--input-bg); color: var(--text-main); 
+        }
+        .auth-btn, .checkout-btn { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; margin-top: 10px; }
 
         .cart-item { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
         .cart-item img { width: 50px; height: 50px; object-fit: contain; }
+
+        /* Checkout Form Grid */
+        .form-row { display: flex; gap: 10px; }
+        .form-row input { flex: 1; }
+        h3 { color: var(--text-main); margin-bottom: 15px; text-align: left; }
 
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -142,11 +171,13 @@
 
         <div class="nav-right">
             <div class="icon-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></div>
-            <span id="greeting" style="font-size:0.9rem; font-weight:600; color:var(--primary)"></span>
+            <span id="greeting" style="font-size:0.9rem; font-weight:600; color:var(--primary); display:none"></span>
+            
             <div class="icon-btn" id="authBtn" onclick="openAuth('login')"><i class="far fa-user"></i></div>
             <div class="icon-btn" id="logoutBtn" onclick="logout()" style="display:none; color:#ff3b30"><i class="fas fa-sign-out-alt"></i></div>
+            
             <div class="icon-btn" onclick="toggleCart()">
-                <i class="fas fa-bag-shopping"></i>
+                <i class="fas fa-shopping-bag"></i>
                 <span class="badge" id="cartBadge">0</span>
             </div>
         </div>
@@ -171,20 +202,18 @@
         <div style="margin-top:20px; font-weight:bold; font-size:1.2rem; display:flex; justify-content:space-between; color:var(--text-main)">
             <span>Cəmi:</span> <span id="totalPrice">0 ₼</span>
         </div>
-        <button class="auth-btn" style="margin-top:20px" onclick="checkout()">Sifarişi Tamamla</button>
+        <button class="auth-btn" style="margin-top:20px" onclick="openCheckoutModal()">Sifarişi Rəsmiləşdir</button>
     </div>
 
     <div class="auth-overlay" id="authOverlay" onclick="if(event.target===this) closeAuth()">
         <div class="auth-box">
             <h2 id="modalTitle" style="margin-bottom:20px; color:var(--text-main)">Giriş</h2>
-            
             <div id="loginForm">
                 <input type="text" id="logUser" class="auth-input" placeholder="İstifadəçi adı">
                 <input type="password" id="logPass" class="auth-input" placeholder="Şifrə">
                 <button class="auth-btn" onclick="login()">Daxil ol</button>
                 <p style="margin-top:15px; color:var(--primary); cursor:pointer" onclick="switchMode('register')">Hesab yarat</p>
             </div>
-
             <div id="regForm" style="display:none">
                 <input type="text" id="regName" class="auth-input" placeholder="Ad">
                 <input type="text" id="regSurname" class="auth-input" placeholder="Soyad">
@@ -197,13 +226,48 @@
         </div>
     </div>
 
+    <div class="checkout-overlay" id="checkoutOverlay" onclick="if(event.target===this) closeCheckout()">
+        <div class="checkout-box">
+            <h2 style="margin-bottom:20px; color:var(--text-main)">Sifarişi Tamamla</h2>
+            
+            <h3>Şəxsi Məlumatlar</h3>
+            <div class="form-row">
+                <input type="text" id="ordName" class="checkout-input" placeholder="Ad">
+                <input type="text" id="ordSurname" class="checkout-input" placeholder="Soyad">
+            </div>
+            <input type="text" id="ordPhone" class="checkout-input" placeholder="Telefon (+994...)">
+            <input type="email" id="ordEmail" class="checkout-input" placeholder="Email">
+
+            <h3>Ünvan</h3>
+            <input type="text" id="ordCity" class="checkout-input" placeholder="Şəhər">
+            <input type="text" id="ordAddress" class="checkout-input" placeholder="Tam Ünvan">
+            <input type="number" id="ordZip" class="checkout-input" placeholder="Poçt İndeksi (Zip)" value="1000">
+
+            <h3>Ödəniş (Kart)</h3>
+            <input type="number" id="ordCard" class="checkout-input" placeholder="Kart Nömrəsi (16 rəqəm)">
+            <div class="form-row">
+                <input type="number" id="ordMonth" class="checkout-input" placeholder="Ay (MM)">
+                <input type="number" id="ordYear" class="checkout-input" placeholder="İl (YYYY)">
+                <input type="number" id="ordCvv" class="checkout-input" placeholder="CVV">
+            </div>
+
+            <div style="display:flex; gap:10px; align-items:center; margin:15px 0; color:var(--text-main)">
+                <input type="checkbox" id="ordAgree" checked>
+                <label for="ordAgree">Şərtləri qəbul edirəm</label>
+            </div>
+
+            <button class="checkout-btn" onclick="submitOrder()">Ödəniş Et və Bitir</button>
+            <button class="checkout-btn" style="background:#ff3b30; margin-top:10px" onclick="closeCheckout()">Ləğv et</button>
+        </div>
+    </div>
+
     <script>
         const API_URL = "/api";
         const IMG_PROXY = "/img-proxy/";
         const NO_IMG = "https://placehold.co/300x300/f5f5f7/a1a1a6?text=No+Image";
 
         let allProducts = [];
-        let cart = []; // LOCAL STORAGE İŞLƏTMİRİK, YALNIZ RAM-DA
+        let cart = [];
         let token = localStorage.getItem('token');
         let userName = localStorage.getItem('name');
 
@@ -231,12 +295,13 @@
         function checkAuth() {
             if(token && userName) {
                 document.getElementById('authBtn').style.display='none';
-                document.getElementById('logoutBtn').style.display='block';
+                document.getElementById('greeting').style.display='block';
+                document.getElementById('logoutBtn').style.display='flex'; // Flex etdik ki, mərkəzləşsin
                 document.getElementById('greeting').innerText = "Salam, " + userName;
             } else {
-                document.getElementById('authBtn').style.display='block';
+                document.getElementById('authBtn').style.display='flex';
+                document.getElementById('greeting').style.display='none';
                 document.getElementById('logoutBtn').style.display='none';
-                document.getElementById('greeting').innerText = "";
             }
         }
 
@@ -269,19 +334,12 @@
                 let img = NO_IMG;
 
                 if (raw && typeof raw === 'string' && raw.trim() !== "") {
-                    if (raw === "shekil" || raw === "string" || raw === "image") {
-                        img = NO_IMG;
-                    } 
+                    if (raw === "shekil" || raw === "string" || raw === "image") { img = NO_IMG; } 
                     else if (raw.startsWith("http")) {
-                        if (raw.includes("195.26.245.5")) {
-                            img = IMG_PROXY + raw.split("9505/")[1];
-                        } else {
-                            img = raw.replace("http://", "https://");
-                        }
+                        if (raw.includes("195.26.245.5")) { img = IMG_PROXY + raw.split("9505/")[1]; } 
+                        else { img = raw.replace("http://", "https://"); }
                     } 
-                    else {
-                        img = IMG_PROXY + raw;
-                    }
+                    else { img = IMG_PROXY + raw; }
                 }
 
                 grid.innerHTML += `
@@ -311,8 +369,6 @@
             if(event) event.stopPropagation();
             const existing = cart.find(i => i.id === id);
             if(existing) existing.count++; else cart.push({ id, name, price, img, count: 1 });
-            
-            // LOCAL STORAGE SİLİNDİ - YALNIZ RAM
             
             const badge = document.getElementById('cartBadge');
             badge.style.transform = "scale(1.5)";
@@ -363,19 +419,60 @@
             if(c>0) b.classList.add('active'); else b.classList.remove('active');
         }
 
-        // --- SİFARİŞİ SERVERƏ GÖNDƏRMƏK (VACİB HİSSƏ) ---
-        async function checkout() {
-            if(cart.length===0) return alert("Səbət boşdur");
+        // --- CHECKOUT LOGIC (YENİ) ---
+        function openCheckoutModal() {
+            if(cart.length === 0) return alert("Səbət boşdur");
             if(!token) return alert("Sifariş üçün giriş etməlisiniz!");
-
-            // 1. Səbəti Serverin istədiyi formata salırıq
-            // Serverin gözlədiyi formatı bilmirik, amma standart olaraq belə ola bilər:
-            // "orderDetails": [ { "productId": 1, "count": 2 } ]
             
-            const orderPayload = {
-                orderDetails: cart.map(item => ({
-                    productId: parseInt(item.id) || 0, // ID rəqəm olmalıdır
-                    count: item.count
+            toggleCart(); // Sidebar-ı bağla
+            const el = document.getElementById('checkoutOverlay');
+            el.style.display='flex';
+            setTimeout(() => el.classList.add('active'), 10);
+        }
+
+        function closeCheckout() {
+            const el = document.getElementById('checkoutOverlay');
+            el.classList.remove('active');
+            setTimeout(() => el.style.display='none', 300);
+        }
+
+        async function submitOrder() {
+            // Məlumatları oxu
+            const firstName = document.getElementById('ordName').value;
+            const lastName = document.getElementById('ordSurname').value;
+            const phone = document.getElementById('ordPhone').value;
+            const email = document.getElementById('ordEmail').value;
+            const city = document.getElementById('ordCity').value;
+            const address = document.getElementById('ordAddress').value;
+            const zip = document.getElementById('ordZip').value;
+            const cardNumber = document.getElementById('ordCard').value;
+            const expMonth = document.getElementById('ordMonth').value;
+            const expYear = document.getElementById('ordYear').value;
+            const cvv = document.getElementById('ordCvv').value;
+            const isAgree = document.getElementById('ordAgree').checked;
+
+            if(!firstName || !lastName || !phone || !address || !cardNumber) {
+                return alert("Zəhmət olmasa bütün vacib xanaları doldurun!");
+            }
+
+            // Serverin Tələb Etdiyi Format
+            const payload = {
+                firstName: firstName,
+                lastName: lastName,
+                stateId: 1, // Default olaraq 1 göndəririk (Server tələb edir)
+                city: city,
+                address: address,
+                zip: parseInt(zip) || 1000,
+                phone: phone,
+                email: email,
+                isAgree: isAgree,
+                cardNumber: parseInt(cardNumber),
+                expirationMonth: parseInt(expMonth),
+                expirationYear: parseInt(expYear),
+                cardSecurityCode: parseInt(cvv),
+                products: cart.map(item => ({
+                    productId: parseInt(item.id),
+                    quantity: item.count
                 }))
             };
 
@@ -384,36 +481,35 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}` // Token mütləq olmalıdır
+                        'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify(orderPayload)
+                    body: JSON.stringify(payload)
                 });
 
                 if(res.ok) {
-                    alert("Sifarişiniz serverə uğurla göndərildi!");
-                    cart = []; // Səbəti boşalt
+                    alert("Sifarişiniz uğurla tamamlandı!");
+                    cart = [];
                     updateBadge();
-                    toggleCart();
+                    closeCheckout();
                 } else {
                     const txt = await res.text();
-                    console.error("Order Error:", txt);
-                    alert("Sifariş xətası. Server qəbul etmədi.");
+                    console.error(txt);
+                    alert("Xəta: Məlumatları yoxlayın (Kart nömrəsi və s.)");
                 }
             } catch(e) {
-                console.error(e);
                 alert("Server xətası.");
             }
         }
 
+        // --- AUTH ---
         function openAuth(m) { 
             const el = document.getElementById('authOverlay');
             el.style.display='flex'; 
             el.classList.add('active');
             switchMode(m); 
         }
-        function closeAuth() { 
-            document.getElementById('authOverlay').style.display='none'; 
-        }
+        function closeAuth() { document.getElementById('authOverlay').style.display='none'; }
+        
         function switchMode(m) {
             if(m==='register') {
                 document.getElementById('loginForm').style.display='none';
@@ -437,7 +533,7 @@
                 const data = await res.json();
                 const tk = data.body?.token || data.token;
                 if(tk) {
-                    localStorage.setItem('token', tk); // Token-i hələ də saxlamalıyıq ki, sifariş verə bilək
+                    localStorage.setItem('token', tk);
                     if(!localStorage.getItem('name')) localStorage.setItem('name', user);
                     location.reload(); 
                 } else alert("Məlumatlar səhvdir.");
@@ -466,7 +562,7 @@
                 if(res.ok) {
                     localStorage.setItem('name', name);
                     login(user, pass);
-                } else alert("Qeydiyyat xətası: İstifadəçi adı tutulub.");
+                } else alert("Qeydiyyat xətası.");
             } catch(e) { alert("Server xətası."); }
         }
 
