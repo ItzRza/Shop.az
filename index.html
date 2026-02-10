@@ -2,8 +2,7 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop.az - Premium Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Shop.az - Premium Store</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
@@ -40,13 +39,14 @@
         body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; transition: 0.3s; }
         html { scroll-behavior: smooth; }
 
-        /* NAVBAR */
+        /* NAVBAR - DESKTOP */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 1000;
             background: var(--nav-bg); backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
-            padding: 0 5%; height: 60px;
+            padding: 0 5%; height: 70px;
             display: flex; justify-content: space-between; align-items: center;
+            transition: 0.3s;
         }
 
         .logo { font-size: 1.6rem; font-weight: 800; text-decoration: none; color: var(--text-main); }
@@ -62,33 +62,20 @@
         .search-wrapper.active .search-input { opacity: 1; }
         .search-icon { font-size: 1.1rem; color: var(--text-main); cursor: pointer; position: absolute; right: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
 
-        /* BADGE FIX - Düzəliş Buradadır */
         .nav-right { display: flex; align-items: center; gap: 20px; }
         .icon-btn { cursor: pointer; font-size: 1.3rem; color: var(--text-main); transition: 0.2s; position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; }
         .icon-btn:hover { color: var(--primary); transform: scale(1.1); }
         
         .badge {
-            position: absolute; 
-            top: 2px; 
-            right: 0px; 
-            background: var(--primary); 
-            color: white;
-            font-size: 0.7rem; 
-            min-width: 18px; 
-            height: 18px; 
-            border-radius: 50%; 
-            font-weight: 700;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            transform: scale(0); 
-            transition: 0.3s;
-            border: 2px solid var(--nav-bg); /* Kənarları ağardır ki, oxunaqlı olsun */
+            position: absolute; top: 2px; right: 0px; background: var(--primary); color: white;
+            font-size: 0.7rem; min-width: 18px; height: 18px; border-radius: 50%; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            transform: scale(0); transition: 0.3s; border: 2px solid var(--nav-bg);
         }
         .badge.active { transform: scale(1); }
 
         /* HERO */
-        .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--hero-gradient); }
+        .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: var(--hero-gradient); padding: 0 20px; }
         .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 10px; opacity: 0; animation: fadeUp 1s forwards 0.2s; }
         .hero p { font-size: 1.5rem; color: var(--text-muted); opacity: 0; animation: fadeUp 1s forwards 0.4s; }
         .cta-btn {
@@ -98,27 +85,27 @@
         }
         .cta-btn:hover { transform: scale(1.05); }
 
-        /* MARKET */
-        .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        /* MARKET GRID */
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
 
         .card {
             background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 20px;
             display: flex; flex-direction: column; align-items: center; text-align: center;
             transition: 0.3s; cursor: pointer; position: relative;
         }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .card img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 15px; }
-        .card-title { font-weight: 600; margin-bottom: 5px; color: var(--text-main); }
-        .card-price { color: var(--text-muted); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; }
+        .card-title { font-weight: 600; margin-bottom: 5px; color: var(--text-main); font-size: 1rem; }
+        .card-price { color: var(--text-muted); font-size: 0.95rem; }
         .add-btn {
-            position: absolute; bottom: 20px; right: 20px; width: 40px; height: 40px;
+            position: absolute; bottom: 15px; right: 15px; width: 35px; height: 35px;
             border-radius: 50%; background: var(--input-bg); color: var(--primary);
             border: none; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
         }
         .card:hover .add-btn { background: var(--primary); color: white; }
 
-        /* SIDEBAR */
+        /* SIDEBAR & MODALS */
         .sidebar {
             position: fixed; top: 0; right: 0; width: 400px; height: 100%;
             background: var(--sidebar-bg); backdrop-filter: blur(20px);
@@ -133,7 +120,6 @@
         }
         .overlay.active, .auth-overlay.active, .checkout-overlay.active { display: flex; align-items: center; justify-content: center; }
 
-        /* MODAL BOXES */
         .auth-box, .checkout-box {
             background: var(--modal-bg); width: 450px; padding: 30px; border-radius: 24px;
             text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
@@ -148,11 +134,43 @@
 
         .cart-item { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
         .cart-item img { width: 50px; height: 50px; object-fit: contain; }
-
-        /* Checkout Form Grid */
         .form-row { display: flex; gap: 10px; }
         .form-row input { flex: 1; }
         h3 { color: var(--text-main); margin-bottom: 15px; text-align: left; }
+
+        /* --- MOBİL UYĞUNLAŞDIRMA (RESPONSIVE) --- */
+        @media (max-width: 768px) {
+            /* Navbar */
+            nav { padding: 10px 15px; height: auto; flex-wrap: wrap; gap: 10px; }
+            .logo { order: 1; flex-grow: 1; font-size: 1.4rem; }
+            .nav-right { order: 2; gap: 10px; }
+            
+            /* Axtarış aşağı düşür */
+            .search-wrapper { 
+                order: 3; position: relative; top: 0; left: 0; transform: none; 
+                width: 100%; height: 45px; background: var(--input-bg);
+            }
+            .search-wrapper.active { width: 100%; }
+            .search-input { opacity: 1; padding-left: 15px; }
+            .search-icon { right: 15px; }
+
+            /* Hero */
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
+            
+            /* Grid (2 sütunlu edirik) */
+            .container { padding: 130px 15px 50px 15px; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .card { padding: 10px; }
+            .card img { height: 120px; }
+            .card-title { font-size: 0.9rem; }
+            .add-btn { bottom: 10px; right: 10px; width: 30px; height: 30px; font-size: 1rem; }
+
+            /* Sidebar & Modals */
+            .sidebar { width: 100%; }
+            .auth-box, .checkout-box { width: 95%; padding: 20px; }
+            .form-row { flex-direction: column; gap: 0; }
+        }
 
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     </style>
@@ -163,8 +181,8 @@
         <a href="#" class="logo">Shop<span>.az</span></a>
         
         <div class="search-wrapper" id="searchWrapper">
-            <input type="text" class="search-input" id="searchInput" placeholder="Məhsul axtar...">
-            <div class="search-icon" onclick="toggleSearch()">
+            <input type="text" class="search-input" id="searchInput" placeholder="Axtar...">
+            <div class="search-icon">
                 <i class="fas fa-search"></i>
             </div>
         </div>
@@ -190,14 +208,17 @@
     </section>
 
     <div class="container" id="market">
-        <h2 style="font-size:2rem; margin-bottom:30px; color:var(--text-main)">Vitrindilər.</h2>
+        <h2 style="font-size:1.8rem; margin-bottom:20px; color:var(--text-main)">Vitrindilər.</h2>
         <div id="loading" style="text-align:center; padding:50px; color:var(--text-muted)">Yüklənir...</div>
         <div class="grid" id="productGrid"></div>
     </div>
 
     <div class="overlay" id="overlay" onclick="toggleCart()"></div>
     <div class="sidebar" id="cartSidebar">
-        <h2 style="margin-bottom:20px; color:var(--text-main)">Səbət</h2>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px">
+            <h2 style="color:var(--text-main)">Səbət</h2>
+            <i class="fas fa-times" onclick="toggleCart()" style="font-size:1.5rem; color:var(--text-muted); cursor:pointer"></i>
+        </div>
         <div style="flex-grow:1; overflow-y:auto" id="cartItems"></div>
         <div style="margin-top:20px; font-weight:bold; font-size:1.2rem; display:flex; justify-content:space-between; color:var(--text-main)">
             <span>Cəmi:</span> <span id="totalPrice">0 ₼</span>
@@ -296,20 +317,13 @@
             if(token && userName) {
                 document.getElementById('authBtn').style.display='none';
                 document.getElementById('greeting').style.display='block';
-                document.getElementById('logoutBtn').style.display='flex'; // Flex etdik ki, mərkəzləşsin
-                document.getElementById('greeting').innerText = "Salam, " + userName;
+                document.getElementById('logoutBtn').style.display='flex';
+                document.getElementById('greeting').innerText = userName;
             } else {
                 document.getElementById('authBtn').style.display='flex';
                 document.getElementById('greeting').style.display='none';
                 document.getElementById('logoutBtn').style.display='none';
             }
-        }
-
-        function toggleSearch() {
-            const wrapper = document.getElementById('searchWrapper');
-            const input = document.getElementById('searchInput');
-            wrapper.classList.toggle('active');
-            if(wrapper.classList.contains('active')) input.focus();
         }
 
         async function loadProducts() {
@@ -419,12 +433,12 @@
             if(c>0) b.classList.add('active'); else b.classList.remove('active');
         }
 
-        // --- CHECKOUT LOGIC (YENİ) ---
+        // --- CHECKOUT LOGIC ---
         function openCheckoutModal() {
             if(cart.length === 0) return alert("Səbət boşdur");
             if(!token) return alert("Sifariş üçün giriş etməlisiniz!");
             
-            toggleCart(); // Sidebar-ı bağla
+            toggleCart(); 
             const el = document.getElementById('checkoutOverlay');
             el.style.display='flex';
             setTimeout(() => el.classList.add('active'), 10);
@@ -437,7 +451,6 @@
         }
 
         async function submitOrder() {
-            // Məlumatları oxu
             const firstName = document.getElementById('ordName').value;
             const lastName = document.getElementById('ordSurname').value;
             const phone = document.getElementById('ordPhone').value;
@@ -452,14 +465,13 @@
             const isAgree = document.getElementById('ordAgree').checked;
 
             if(!firstName || !lastName || !phone || !address || !cardNumber) {
-                return alert("Zəhmət olmasa bütün vacib xanaları doldurun!");
+                return alert("Xanaları doldurun!");
             }
 
-            // Serverin Tələb Etdiyi Format
             const payload = {
                 firstName: firstName,
                 lastName: lastName,
-                stateId: 1, // Default olaraq 1 göndəririk (Server tələb edir)
+                stateId: 1,
                 city: city,
                 address: address,
                 zip: parseInt(zip) || 1000,
@@ -479,10 +491,7 @@
             try {
                 const res = await fetch(API_URL + "/orders", {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                     body: JSON.stringify(payload)
                 });
 
@@ -492,20 +501,15 @@
                     updateBadge();
                     closeCheckout();
                 } else {
-                    const txt = await res.text();
-                    console.error(txt);
-                    alert("Xəta: Məlumatları yoxlayın (Kart nömrəsi və s.)");
+                    alert("Xəta: Məlumatları yoxlayın");
                 }
-            } catch(e) {
-                alert("Server xətası.");
-            }
+            } catch(e) { alert("Server xətası."); }
         }
 
         // --- AUTH ---
         function openAuth(m) { 
             const el = document.getElementById('authOverlay');
-            el.style.display='flex'; 
-            el.classList.add('active');
+            el.style.display='flex'; el.classList.add('active');
             switchMode(m); 
         }
         function closeAuth() { document.getElementById('authOverlay').style.display='none'; }
